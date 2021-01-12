@@ -2,7 +2,7 @@ import os
 import youtube_dl
 
 
-VIDEO_DOWNLOAD_PATH = '../../downlaod'  # 다운로드 경로
+VIDEO_DOWNLOAD_PATH = '../../download'  # 다운로드 경로
 VIDEO_DOWNLOAD_URL_TXT_FILE_NAME = 'url.txt'  # 다운로드 대상 url txt 파일 이름
 VIDEO_DOWNLOAD_URL_TXT_FILE_PATH = './'  # 다운로드 대상 url txt 파일 위치
 
