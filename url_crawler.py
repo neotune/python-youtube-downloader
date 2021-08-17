@@ -2,12 +2,12 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
+import re
 
-# setting
-SCROLL_PAUSE_TIME = 1
-YOUTUBE_URL = 'https://www.youtube.com/c/pororo/videos'
-SAVE_FILE_NAME = 'url.txt'
-SAVE_FILE_PATH = './'
+SCROLL_PAUSE_TIME = 1                                    # 스크롤 딜레이
+YOUTUBE_URL = 'https://www.youtube.com/c/pororo/videos'  # 수집할 채널의 동영상 목록 url
+URL_SAVE_FILE_NAME = './url.txt'                         # url 저장 파일 경로
+PATTERN = re.compile('(뽀로로) [0-9]기')                  # 정규식 패턴
 
 
 def get_lxml():
@@ -44,24 +44,34 @@ def extract_url(lxml):
     soup = BeautifulSoup(lxml, 'lxml')
 
     # 동영상 리스트의 최상단 id set
-    all_videos = soup.find_all(id='dismissable')
+    all_videos = soup.find_all(id='dismissible')
 
     url_list = []
     for video in all_videos:
+        # 유튜브 동영상 리스트 추출
         title = video.find(id='video-title')
+
+        # 리스트가 있을 경우
         if len(title.text.strip()) > 0:
-            url_list.append('https://www.youtube.com' + title.attrs['href'])
+            # 정규식에 맞는 제목만 url 저장
+            if PATTERN.search(title.attrs['title']):
+                print(title.attrs['title'])
+                url_list.append('https://www.youtube.com' + title.attrs['href'])
 
     return url_list
 
 
 def save_url_txt_file(url_list):
-    with open(SAVE_FILE_PATH + SAVE_FILE_NAME, "w") as f:
+    with open(URL_SAVE_FILE_NAME, "w") as f:
         for item in url_list:
             f.write("%s\n" % item)
 
-
 if __name__ == '__main__':
+    # 페이지를 전체 로딩 후 로딩된 html 을 가지고 파싱하는 방식
     lxml = get_lxml()
+    
+    # 전체 로딩된 html 데이터를 가지고 파싱
     url_list = extract_url(lxml)
+    
+    # html 에서 추출된 url list 저장
     save_url_txt_file(url_list)

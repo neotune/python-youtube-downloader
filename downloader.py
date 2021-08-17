@@ -2,9 +2,9 @@ import os
 import youtube_dl
 
 
-VIDEO_DOWNLOAD_PATH = '../../download'  # 다운로드 경로
-VIDEO_DOWNLOAD_URL_TXT_FILE_NAME = 'url.txt'  # 다운로드 대상 url txt 파일 이름
-VIDEO_DOWNLOAD_URL_TXT_FILE_PATH = './'  # 다운로드 대상 url txt 파일 위치
+VIDEO_DOWNLOAD_PATH = '../../download'                        # 다운로드 경로
+VIDEO_DOWNLOAD_URL_TXT_FILE = './url.txt'                     # 다운로드 대상 url txt 파일 이름
+VIDEO_DOWNLOAD_COMPLETE_URL_TEXT_FILE = './complete_url.txt'  # 다운로드 완료 URL txt 파일
 
 
 def download_video_and_subtitle(output_dir, youtube_video_list):
@@ -24,14 +24,33 @@ def download_video_and_subtitle(output_dir, youtube_video_list):
 
         try:
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-                ydl.download([video_url])
+                status = ydl.download([video_url])
+                if status == 0:
+                    with open(VIDEO_DOWNLOAD_COMPLETE_URL_TEXT_FILE, "w") as file:
+                        file.write(video_url)
+                        print("complete download : " + video_url)
+
         except Exception as e:
             print('error', e)
 
 
-def make_download_url_list(file_path, file_name):
-    list_file = [line.rstrip('\n') for line in open(file_path + file_name, 'r')]
-    return list_file
+def make_download_url_list():
+    download_list = [line.rstrip('\n') for line in open(VIDEO_DOWNLOAD_URL_TXT_FILE, 'r')]
+    print("download url list count : ", len(download_list))
+
+    download_complete_list = []
+    if os.path.isfile(VIDEO_DOWNLOAD_COMPLETE_URL_TEXT_FILE):
+        download_complete_list = [line.rstrip('\n') for line in open(VIDEO_DOWNLOAD_COMPLETE_URL_TEXT_FILE, 'r')]
+        print("download complete url list count : ", len(download_complete_list))
+
+    new_donwload_list = []
+    for url in download_list:
+        if url not in download_complete_list:
+            new_donwload_list.append(url)
+
+    print("download complete url delete new url list count : ", len(new_donwload_list))
+
+    return download_list
 
 
 if __name__ == '__main__':
@@ -39,7 +58,7 @@ if __name__ == '__main__':
 
     download_video_and_subtitle(
         VIDEO_DOWNLOAD_PATH,
-        make_download_url_list(VIDEO_DOWNLOAD_URL_TXT_FILE_PATH, VIDEO_DOWNLOAD_URL_TXT_FILE_NAME)
+        make_download_url_list()
     )
 
     print('Complete download!')
