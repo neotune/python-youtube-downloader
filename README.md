@@ -2,10 +2,10 @@
 
 > ###python version : 3.9.1
 > #### module
-> - youtube_dl 2021.1.8 (pip install youtube_dl)
-> - beautifulsoup4 (pip install beautifulsoup4)
-> - Selenium (pip install selenium)
-> - lxml (pip install lxml)
+> - youtube_dl 2021.6.6 (pip install youtube-dl==2021.6.6)
+> - beautifulsoup4 (pip install beautifulsoup4==4.9.3)
+> - Selenium (pip install selenium==3.141.0)
+> - lxml (pip install lxml==4.6.2)
 
 -------------
 
