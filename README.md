@@ -1,6 +1,6 @@
 # python-youtube-downloader
 
-> ###python version : 3.9.1
+> ### python version : 3.9.1
 > #### module
 > - youtube_dl 2021.6.6 (pip install youtube-dl==2021.6.6)
 > - beautifulsoup4 (pip install beautifulsoup4==4.9.3)
@@ -18,7 +18,7 @@
 3. 전체 수집이 아닌 특정 동영상만 수집 하고 싶을 경우 정규식 수정
 4. 크롬 버젼에 따라서 ```https://chromedriver.chromium.org/downloads``` 에서 ```chromedriver.exe```
 를 최신화 해야함
-5. 원하는 내용 수정 후 ```pyhton url_crawler.py``` 실행
+5. 원하는 내용 수정 후 ```python url_crawler.py``` 실행
 6. ```url_crawler.py``` 위치에 url.txt 파일 생성됨
 7. ```downloader.py``` 에 원하는 저장 경로 수정
 8. ```python downloader.py``` 실행
