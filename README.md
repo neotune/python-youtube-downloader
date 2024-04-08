@@ -7,8 +7,6 @@
 > - Selenium (pip install selenium==3.141.0)
 > - lxml (pip install lxml==4.6.2)
 
--------------
-
 ### 실행 방법
 > 해당 실행 환경은 윈도우10에서 실행 하도록 되어 있음
 > 2번의 파일의 실행을 통해 동영상이 저장됨
